@@ -1,0 +1,31 @@
+/*2.6.1 Nazwisk (last_name) oraz wypłat (salary) pracowników, którzy zarabiają ponad 90% wypłaty pracownika o nazwisku Chen (tabela employees);*/
+
+/*SELECT last_name, salary 
+FROM employees 
+WHERE salary > 0.9 * (SELECT salary
+                      FROM employees
+                      WHERE last_name = 'Chen');*/
+
+
+/*2.6.2 Nazwisk (last_name), id działów (department_id) oraz wypłat (salary) pracowników, którzy zarabiają więcej, niż każdy pracownik działu 'Marketing' ( tabele employees  ).*/
+
+/*SELECT last_name, department_id, salary
+FROM employees
+WHERE salary > ALL (SELECT salary
+                    FROM employees
+                    WHERE manager_id = (SELECT manager_id
+                                        FROM departments
+                                        WHERE department_name = 'Marketing'));*/
+
+
+/*2.6.3 Identyfikatory działów (department_id) , w których pracuje więcej pracowników, niż w dziale 'IT' (tabele departments), wraz z ilością pracowników oraz minimalna pensja pracowników  w tych działach.(tabele employees )*/
+
+/*SELECT department_id, COUNT(*), MIN(salary)
+FROM employees
+GROUP BY department_id
+HAVING COUNT(*) > ALL (SELECT COUNT(*)
+                       FROM employees
+                       GROUP BY department_id
+                       HAVING department_id = (SELECT department_id
+                                               FROM departments 
+                                               WHERE department_name = 'IT'));*/

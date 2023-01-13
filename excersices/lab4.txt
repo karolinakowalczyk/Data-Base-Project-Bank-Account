@@ -1,0 +1,16 @@
+/*4.1. Dodanie do tabeli employees wiersza opisującego pracownika o numerze (employee_id) 10, o dowolnych wartościach we wszystkich wymaganych kolumnach (atrybut kolumny Nullable = "No") oraz numerze kierownika (manager_id) takim samym, jak numer kierownika (manager_id) pracownika o nazwisku Chung. Nie wypełniaj pozostałych kolumn. 
+(podpowiedź: Wykorzystaj podzapytanie. Pamiętaj, że wartości typu VARCHAR2 oraz DATE muszą być wpisywane w pojedynczych apostrofach, sprawdź też ograniczenia nałożone na kolumny w tabeli employees, np. w widoku "Constraints")*/
+
+/*INSERT INTO employees(employee_id, last_name, email, hire_date, job_id, manager_id)
+VALUES (10, 'Kowalczyk', 'k@wp.pl', '20/05/25', 'IT_PROG', (SELECT manager_id FROM employees WHERE last_name = 'Chung'))*/
+
+/*4.2. Zmodyfikowanie w tabeli employees wiersza opisującego pracownika o numerze (employee_id) 10, nadając mu pensję (salary) o wartości średniej pensji pracowników, których nazwisko (last_name) rozpoczyna się od litery K. (podpowiedź: Wykorzystaj podzapytanie.)*/
+
+/*UPDATE employees
+SET salary  = (SELECT AVG(salary)
+               FROM employees
+               WHERE last_name LIKE 'K%')
+WHERE employee_id = 10;*/
+/**4.3. Usunięcie z tabeli employees wszystkich wierszy opisujących pracowników, którzy nie mają przypisanego numeru telefonu. */
+/*DELETE FROM employees 
+WHERE phone_number IS NULL;*/

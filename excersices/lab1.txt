@@ -1,0 +1,74 @@
+/*Napisz zapytanie w języku SQL do bazy danych HR, które spowoduje wyświetlenie:
+
+1.1.1. Wszystkich nazwisk pracowników oraz ich wypłat (SELECT, FROM - tabela employees)*/
+
+/*SELECT last_name, salary
+FROM employees;*/
+
+/*2.1.2. Wszystkich nazw działów w kolumnie "nazwa_dzialu" wraz z numerami identyfikacyjnymi ich kierowników w kolumnie "numer_kierownika" (SELECT, FROM, alias - tabela departments)*/
+/*SELECT department_name, manager_id
+FROM departments;*/
+
+/*3.1.3. Nazwisk wszystkich pracowników, którzy zarabiają więcej niż 10000 wraz z ich płacami;*/
+
+/*SELECT last_name, salary
+FROM employees
+WHERE salary > 10000;*/
+
+
+/*4.1.1. Nazwisk (last_name) oraz wypłat (salary) pracowników przypisanych do kierownika o numerze (manager_id) 100, których wypłaty wynoszą ponad 10000, (AND/OR);*/
+
+/*SELECT last_name, salary
+FROM employees
+WHERE manager_id = 100 AND salary > 10000;*/
+
+/*5.1.2.  Kodów stanowisk (job_id) bez powtarzania oraz numerów kierowników (manager_id) dla kierowników o numerach 100 lub 102. (DISTINCT, AND/OR );*/
+
+/*SELECT DISTINCT job_id, manager_id
+FROM employees
+WHERE manager_id = 100 OR manager_id = 102;*/
+
+/*6.1.3. Nazwisk (last_name), wypłat (salary) oraz kodów stanowisk (job_id) pracowników, których kod stanowiska kończy się na "_MGR", posortowane po nazwiskach oraz oraz po pensji w kolejności od najwięcej do najmniej zarabiającego pracownika-> użyj polskich nazw kolumn. (LIKE)*/
+/*SELECT last_name AS Nazwisko, salary AS Pensja, job_id AS Kod_stanowiska
+FROM employees
+WHERE job_id LIKE '%0_MGR' ESCAPE '0'
+ORDER BY last_name ASC, salary DESC;*/
+
+/*7.2.1. Nazwy departamentów, id departamentu, posortowanych rosnąco po nazwach departamentów oraz malejąco po id departamentu, których ID jest mniejsze od 120. Użyj polskich nazw kolumn.*/
+
+/*SELECT department_name AS nazwa_departamentu, department_id AS id_departamentu
+FROM departments
+WHERE department_id < 120 
+ORDER BY department_name ASC, department_id DESC;*/
+
+/*8.2.1 Ilu jest pracowników zatrudnionych na stanowisku o ID rozpoczynającym się od (AD_) oraz jaka jest ich sumaryczna pensja.*/ 
+/*SELECT count (*), SUM(salary)
+FROM employees
+WHERE job_id LIKE 'AD0_%' ESCAPE '0';*/
+
+/*9.3.1. Ilości pracowników przypisanych do każdego kodu stanowiska (job_id) wraz z odpowiadającymi kodami stanowisk, posortowanych malejąco pod względem ilości pracowników. (COUNT(), GROUP BY )*/
+
+/*SELECT COUNT(*), job_id
+FROM employees
+GROUP BY job_id
+ORDER BY COUNT(*) DESC;*/
+
+/*10.3.2. Numerów kierowników (manager_id) oraz największych wypłat (salary) pracowników, którzy są do nich przypisani. (MAX, GROUP BY)*/
+/*SELECT manager_id, MAX(salary)
+FROM employees
+GROUP BY manager_id;*/
+
+/*11.3.3. Kodów stanowisk (job_id) oraz średnich wypłat (salary) pracowników, którzy są do nich przypisani, posortowanych malejąco po średnich wypłatach. Użyj polskich nazw kolumn. (AVG, GROUP BY)*/
+
+/*SELECT job_id AS kod_stanowiska, AVG(salary) AS srednia_pensja
+FROM employees
+GROUP BY job_id
+ORDER BY AVG(salary) DESC;*/
+
+/*12.3.4. Kodów stanowisk (job_id), ilości przypisanych do nich pracowników oraz najmniejszych, średnich i największych wypłat (salary) dla pracowników, którzy są do nich przypisani oraz zarabiają ponad 5000, posortowanych rosnąco po najmniejszych wypłatach. Użyj polskich nazw kolumn.*/
+
+/*SELECT job_id AS kod_stanowiska, COUNT(*) AS ilosc_pracownikow, MIN(salary) AS minimalna_pensja, MAX(salary) AS maksymalna_pensja, AVG(salary) AS srednia_pensja
+FROM employees
+WHERE salary > 5000
+GROUP BY job_id
+ORDER BY MIN(salary) ASC;*/
