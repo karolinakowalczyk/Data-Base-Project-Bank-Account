@@ -1,0 +1,53 @@
+/* Wyswietla historie transakcji wybranej osoby
+SELECT w.Imie_wlasciciela AS "Imie nadawcy", w.Nazwisko_wlasciciela AS "Nazwisko nadawcy", r.Nr_rachunku AS "Nr rachunku nadawcy",
+w2.Imie_wlasciciela AS "Imie odbiorcy", w2.Nazwisko_wlasciciela AS "Nazwisko odbiorcy", r2.Nr_rachunku AS "Nr rachunku odbiorcy", t.kwota,
+c.rok || '-' || c.miesiac || '-' || c.dzien || ' ' ||  c.godzina || ':' || c.minuty AS "Data transakcji"
+
+FROM Transakcje t
+JOIN Rachunek r
+ON t.id_rachunku_nadawcy = r.id_rachunku
+JOIN Wlasciciel w
+ON r.id_wlasciciela = w.id_wlasciciela
+JOIN Rachunek r2
+ON t.id_rachunku_odbiorcy = r2.id_rachunku
+JOIN Wlasciciel w2
+ON r2.id_wlasciciela = w2.id_wlasciciela
+JOIN Czas c
+ON c.id_czasu = t.id_czasu
+WHERE w.id_wlasciciela =  &id_wlasciciela;*/
+
+
+/* Tworzy nowy adres a nastepnie nowego wlasciciela i przypisuje mu ten adres
+INSERT INTO Adres
+(id_adresu, kod_pocztowy, ulica, nr_lokalu, nr_mieszkania, miejscowosc)
+VALUES ((SELECT MAX(id_adresu) + 1 FROM Adres), '&kod_pocztowy', '&ulica', &nr_lokalu, &nr_mieszkania, '&miejscowosc');
+
+INSERT INTO Wlasciciel
+(id_wlasciciela, id_adresu, imie_wlasciciela, nazwisko_wlasciciela, plec_wlasciciela, pesel_wlasciciela)
+VALUES ((SELECT MAX(id_wlasciciela) + 1 FROM Wlasciciel), (SELECT MAX(id_adresu) FROM Adres), '&imie_wlasciciela', '&nazwisko_wlasciciela', '&plec_wlasciciela', '&pesel_wlasciciela');*/
+
+/*Usuwa nieu¿ywane adresy
+DELETE FROM Adres 
+WHERE id_adresu NOT IN (SELECT id_adresu_oddzialu FROM Oddzialy) AND id_adresu NOT IN (SELECT id_adresu FROM Wlasciciel);*/
+
+/*Aktualizacja danych osobowych wybranego wlasciciela
+UPDATE Wlasciciel
+SET imie_wlasciciela = '&imie_wlasciciela', nazwisko_wlasciciela = '&nazwisko_wlasciciela', plec_wlasciciela = '&plec_wlasciciela', pesel_wlasciciela = '&pesel_wlasciciela'
+WHERE id_wlasciciela = &id_wlasciciela;*/
+ 
+/*usuwa wybranego wlasciciela
+DELETE FROM Wlasciciel
+WHERE id_wlasciciela = &id_wlasciciela;*/
+
+/*sprawdza stan konta
+SELECT r.saldo AS "stan konta"
+FROM Rachunek r
+JOIN Wlasciciel w
+ON r.id_wlasciciela = w.id_wlasciciela
+WHERE r.id_wlasciciela = &id_wlasciciela;*/
+
+
+
+
+
+
